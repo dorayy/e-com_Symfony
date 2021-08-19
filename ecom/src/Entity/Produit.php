@@ -54,6 +54,14 @@ class Produit
         $this->contenuPaniers = new ArrayCollection();
     }
 
+    public function getinfosById(int $id)
+    {
+        if ($this->id === $id){     
+            return $this;
+        }
+        return null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

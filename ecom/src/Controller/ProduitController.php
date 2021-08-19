@@ -60,14 +60,16 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/produit/{id}", name="produit_show", methods={"GET"})
+     * @Route("/produit/{id}", name="produit_show", methods={"GET","POST"})
      */
     public function show(Produit $produit,Securizer $securizer, Request $request): Response
     {
         $isAdmin = 0;
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $user->getNom();
-
+        $data = null;
+        $produitId = $produit->getId();
+        
         if($securizer->isGranted($user, 'ROLE_ADMIN')){
             $isAdmin = 1;
         }
@@ -79,8 +81,13 @@ class ProduitController extends AbstractController
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            $qte = intval($data["quantite"]);
+
+
+            return $this->redirectToRoute('panier_article',  ['qte' => $qte , 'produitId' => $produitId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('produit/show.html.twig', [

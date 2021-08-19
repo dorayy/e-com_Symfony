@@ -26,7 +26,7 @@ class Panier
     private $utilisateur;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable="true")
      */
     private $dateAchat;
 
@@ -43,6 +43,7 @@ class Panier
     public function __construct()
     {
         $this->contenuPaniers = new ArrayCollection();
+        $this->etat = false;
     }
 
     public function getId(): ?int
@@ -116,14 +117,15 @@ class Panier
         return $this;
     }
 
+    /*
     /**
      * Gets triggered only on insert
      * @ORM\PrePersist
-     */
+     
     public function onPrePersist()
     {
         $this->dateAchat = new \DateTime("now");
-    }
+    }*/
 
     public function __toString()
     {

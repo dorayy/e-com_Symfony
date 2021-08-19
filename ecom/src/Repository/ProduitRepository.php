@@ -19,6 +19,18 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function findProduitById($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

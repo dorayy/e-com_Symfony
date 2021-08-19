@@ -49,7 +49,7 @@ class ContenuPanierController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="contenu_panier_show", methods={"GET"})
+     * @Route("/show/{id}", name="contenu_panier_show", methods={"GET"})
      */
     public function show(ContenuPanier $contenuPanier): Response
     {
@@ -91,4 +91,5 @@ class ContenuPanierController extends AbstractController
 
         return $this->redirectToRoute('contenu_panier_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
