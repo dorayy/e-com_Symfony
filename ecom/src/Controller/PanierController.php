@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Entity\User;
 use App\Form\PanierType;
 use App\Repository\PanierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,9 +21,12 @@ class PanierController extends AbstractController
      */
     public function index(PanierRepository $panierRepository): Response
     {
+        $currentUser = $this->getUser()->getId();
+        var_dump($panierRepository->findUserPanier($currentUser));
         return $this->render('panier/index.html.twig', [
-            'paniers' => $panierRepository->findAll(),
+            'paniers' => $panierRepository->findUserPanier($currentUser),
         ]);
+        
     }
 
     /**
