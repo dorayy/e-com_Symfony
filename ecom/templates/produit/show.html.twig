@@ -34,7 +34,9 @@
         </tbody>
     </table>
     
-    <a class="btn btn-outline-primary" href="{{ path('panier_new')}}">Ajouter au panier</a>
+    {{ form(form) }}
+
+    <a class="btn btn-outline-info" href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
 
     <a class="btn btn-outline-secondary"  href="{{ path('produit_index') }}">back</a>
 

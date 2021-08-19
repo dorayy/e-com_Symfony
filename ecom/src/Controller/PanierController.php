@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\ContenuPanier;
 use App\Entity\Panier;
+use App\Entity\User;
 use App\Form\PanierType;
 use App\Repository\PanierRepository;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +55,7 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="panier_show", methods={"GET"})
+     * @Route("/show/{id}", name="panier_show", methods={"GET"})
      */
     public function show(Panier $panier): Response
     {
@@ -94,4 +97,39 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/panier_article", name="panier_article", methods={"GET"})
+     */
+    public function addArticleToPanier(PanierRepository $panierRepository,Request $request,ProduitRepository $produitRepository): Response
+    {
+        // Récupération du user de session 
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        // Création d'un panier
+        $newPanier = new Panier();
+        $newPanier->setUtilisateur($user);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($newPanier);
+        $entityManager->flush();
+
+        // Récupération params
+        $qte = $request->query->get('qte');
+        $produitId = $request->query->get('produitId');
+
+        // Récupération du produit
+        $produit = $produitRepository->find($produitId);
+
+        // Création du contenu Panier
+        $newContenu = new ContenuPanier();
+        $newContenu->setQuantite($qte);
+        $newContenu->setPanier($newPanier);
+        $newContenu->setProduit($produit);
+
+        $entityManager->persist($newContenu);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }
