@@ -20,8 +20,11 @@ class PanierController extends AbstractController
      */
     public function index(PanierRepository $panierRepository): Response
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+
         return $this->render('panier/index.html.twig', [
-            'paniers' => $panierRepository->findAll(),
+            'paniers' => $panierRepository->findPanierUser($user),
         ]);
     }
 
