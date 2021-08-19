@@ -10,7 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-Use App\Service\Securizer;
+use App\Service\Securizer;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProduitController extends AbstractController
 {
@@ -60,7 +62,7 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produit/{id}", name="produit_show", methods={"GET"})
      */
-    public function show(Produit $produit,Securizer $securizer): Response
+    public function show(Produit $produit,Securizer $securizer, Request $request): Response
     {
         $isAdmin = 0;
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -69,8 +71,21 @@ class ProduitController extends AbstractController
         if($securizer->isGranted($user, 'ROLE_ADMIN')){
             $isAdmin = 1;
         }
+
+        $form = $this->createFormBuilder()
+            ->add('quantite', NumberType::class)
+            ->add('Entrer', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+        }
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'form' => $form->createView(),
             'isAdmin' => $isAdmin,
         ]);
     }
