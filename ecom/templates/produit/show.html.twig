@@ -33,10 +33,13 @@
             </tr>
         </tbody>
     </table>
+    
+    <a class="btn btn-outline-primary" href="{{ path('panier_new')}}">Ajouter au panier</a>
 
-    <a href="{{ path('produit_index') }}">back to list</a>
+    <a class="btn btn-outline-secondary"  href="{{ path('produit_index') }}">back</a>
 
-    <a href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
-
+    {% if isAdmin == 1 %}
+    <a class="btn btn-outline-info" href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
     {{ include('produit/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}
