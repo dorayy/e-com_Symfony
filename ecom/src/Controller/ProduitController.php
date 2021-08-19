@@ -3,30 +3,39 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\User;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+Use App\Service\Securizer;
 
-/**
- * @Route("/produit")
- */
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/", name="produit_index", methods={"GET"})
+     * @Route("/home", name="produit_index", methods={"GET"})
      */
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository,Securizer $securizer): Response
     {
+        $isAdmin = 0;
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getNom();
+
+        if($securizer->isGranted($user, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
+
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
+            'user' => $user,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
     /**
-     * @Route("/new", name="produit_new", methods={"GET","POST"})
+     * @Route("/produit/new", name="produit_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,20 +58,37 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="produit_show", methods={"GET"})
+     * @Route("/produit/{id}", name="produit_show", methods={"GET"})
      */
-    public function show(Produit $produit): Response
+    public function show(Produit $produit,Securizer $securizer): Response
     {
+        $isAdmin = 0;
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getNom();
+
+        if($securizer->isGranted($user, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="produit_edit", methods={"GET","POST"})
+     * @Route("/produit/{id}/edit", name="produit_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Produit $produit): Response
+    public function edit(Request $request, Produit $produit,Securizer $securizer): Response
     {
+        $isAdmin = 0;
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getNom();
+
+        
+        if($securizer->isGranted($user, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
+
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
@@ -75,11 +101,12 @@ class ProduitController extends AbstractController
         return $this->renderForm('produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="produit_delete", methods={"POST"})
+     * @Route("/produit/{id}", name="produit_delete", methods={"POST"})
      */
     public function delete(Request $request, Produit $produit): Response
     {
