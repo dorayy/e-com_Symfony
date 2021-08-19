@@ -3,12 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <!-- Import Bootstrape -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        <!-- Import Bootstrap -->
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" 
-              integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
@@ -18,6 +17,43 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ path('home') }}">Home</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('produit_index') }}">Produit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('panier_index') }}">Panier</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('contenu_panier_index') }}">Contenu Panier</a>
+                        </li>
+                        {% if app.user is not null %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <p class="alert alert-{{ type }}">{{ message }}</p>
+            {% endfor %}
+        {% endfor %}
         {% block body %}{% endblock %}
     </body>
 </html>
