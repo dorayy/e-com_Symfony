@@ -30,6 +30,19 @@ class PanierRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findPanierUserAchete($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id, p.dateAchat')
+            ->where('p.etat = :etat')
+            ->setParameter('etat', 1)
+            ->andWhere('p.utilisateur = :user')
+            ->setParameter('user', $value)
+            ->getQuery()
+            ->getResult() 
+        ;
+    }
+
     // /**
     //  * @return Panier[] Returns an array of Panier objects
     //  */

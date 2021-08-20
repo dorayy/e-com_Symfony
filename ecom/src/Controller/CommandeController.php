@@ -9,12 +9,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommandeController extends AbstractController
 {
     /**
-     * @Route("/commande/{id}", name="commande")
+     * @Route("/commande/detail/{id}", name="commande_detail")
      */
-    public function detailCommande(): Response
+    public function Detailcommande($id): Response
     {
-        return $this->render('commande/index.html.twig', [
-            'controller_name' => 'CommandeController',
-        ]);
+        return $this->redirectToRoute('commande_show', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }

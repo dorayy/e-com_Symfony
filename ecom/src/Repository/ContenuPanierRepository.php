@@ -21,7 +21,6 @@ class ContenuPanierRepository extends ServiceEntityRepository
 
     public function findCommandeUser($value)
     {
-
         return $this->createQueryBuilder('c')
             ->select('p.id','p.dateAchat','pr.prix','c.quantite')
             ->leftJoin('App\Entity\Panier',
@@ -39,7 +38,29 @@ class ContenuPanierRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult() 
         ;
+    }
 
+    public function findCommandeDetailUser($value, $value2)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('pr.nom','c.quantite','pr.prix','p.dateAchat')
+            ->leftJoin('App\Entity\Panier',
+                        'p',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                       'p.id = c.panier')
+            ->leftJoin('App\Entity\Produit',
+                        'pr',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                        'pr.id = c.produit')
+            ->where('p.etat = :etat')
+            ->setParameter('etat', 1)
+            ->andWhere('p.utilisateur = :user')
+            ->setParameter('user', $value)
+            ->andWhere('p.id = :panier')
+            ->setParameter('panier', $value2)
+            ->getQuery()
+            ->getResult() 
+        ;
     }
 
     // /**

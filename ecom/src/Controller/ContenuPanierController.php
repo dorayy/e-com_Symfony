@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ContenuPanier;
 use App\Form\ContenuPanierType;
 use App\Repository\ContenuPanierRepository;
+use App\Repository\PanierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,9 +94,9 @@ class ContenuPanierController extends AbstractController
     }
 
     /**
-     * @Route("/showContenu/{id}", name="contenu_show", methods={"GET"})
+     * @Route("/commande/{id}", name="contenu_show", methods={"GET"})
      */
-    public function showContenuByUserId($id,ContenuPanierRepository $contenuPanierRepository): Response
+    public function showContenuByUserId($id,ContenuPanierRepository $contenuPanierRepository, PanierRepository $panierRepository): Response
     {
         $userId = $this->get('security.token_storage')->getToken()->getUser();
         $user = $userId->getId();
@@ -103,9 +104,22 @@ class ContenuPanierController extends AbstractController
         return $this->render('contenu_panier/commande.html.twig', [
             'user' =>  $user,
             'contenu_panier' => $contenuPanierRepository->findCommandeUser($id),
+            'panier' => $panierRepository->findPanierUserAchete($id),
         ]);
     }
 
-
+    /**
+     * @Route("/detail/{id}", name="commande_show", methods={"GET"})
+     */
+    public function showCommandeByProduitId($id,ContenuPanierRepository $contenuPanierRepository): Response
+    {
+        $userId = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $userId->getId();
+        
+        return $this->render('commande/index.html.twig', [
+            'user' =>  $user,
+            'commande_detail' => $contenuPanierRepository->findCommandeDetailUser($user, $id),
+        ]);
+    }
 
 }

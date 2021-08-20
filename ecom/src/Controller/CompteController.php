@@ -45,7 +45,7 @@ class CompteController extends AbstractController
         $userId = $this->get('security.token_storage')->getToken()->getUser();
         $user = $userId->getId();
         
-        return $this->redirectToRoute('user_edit', ['id' => $user], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('contenu_show', ['id' => $user], Response::HTTP_SEE_OTHER);
     }
 
 }
