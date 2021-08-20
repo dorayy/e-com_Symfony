@@ -19,6 +19,29 @@ class ContenuPanierRepository extends ServiceEntityRepository
         parent::__construct($registry, ContenuPanier::class);
     }
 
+    public function findCommandeUser($value)
+    {
+
+        return $this->createQueryBuilder('c')
+            ->select('p.id','p.dateAchat','pr.prix','c.quantite')
+            ->leftJoin('App\Entity\Panier',
+                        'p',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                       'p.id = c.panier')
+            ->leftJoin('App\Entity\Produit',
+                        'pr',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                        'pr.id = c.produit')
+            ->where('p.etat = :etat')
+            ->setParameter('etat', 1)
+            ->andWhere('p.utilisateur = :user')
+            ->setParameter('user', $value)
+            ->getQuery()
+            ->getResult() 
+        ;
+
+    }
+
     // /**
     //  * @return ContenuPanier[] Returns an array of ContenuPanier objects
     //  */

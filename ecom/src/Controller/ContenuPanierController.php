@@ -92,6 +92,20 @@ class ContenuPanierController extends AbstractController
         return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    /**
+     * @Route("/showContenu/{id}", name="contenu_show", methods={"GET"})
+     */
+    public function showContenuByUserId($id,ContenuPanierRepository $contenuPanierRepository): Response
+    {
+        $userId = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $userId->getId();
+        
+        return $this->render('contenu_panier/commande.html.twig', [
+            'user' =>  $user,
+            'contenu_panier' => $contenuPanierRepository->findCommandeUser($id),
+        ]);
+    }
+
 
 
 }

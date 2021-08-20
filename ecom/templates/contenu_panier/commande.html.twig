@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ContenuPanier{% endblock %}
+
+{% block body %}
+    <h1>ContenuPanier</h1>
+ 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Identifiant Commande</th>
+                <th>Montant</th>
+                <th>Date Achat</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contenu in contenu_panier %}
+            {% set sum = 0 %}
+            <tr>
+                <td>{{ contenu.id }}</td>                
+                <td>{{ contenu.prix * contenu.quantite}}</td>                
+                <td>{{ contenu.dateAchat ? contenu.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% endfor %} 
+        </tbody>
+    </table>
+
+
+
+    <a href="{{ path('contenu_panier_index') }}">back to list</a>
+{% endblock %}

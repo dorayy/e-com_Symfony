@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompteController!{% endblock %}
+
+{% block body %}
+
+
+<div>
+    <h1> Bonjour {{nom}}</h1>
+     <p><a class="btn btn-outline-primary" href="{{ path('compte_edit') }}">Edition espace profil</a></p>
+     <p><a class="btn btn-outline-primary" {#href="{{ path('compte_commande') }}"#}> Visualiser les commandes</a></p>
+</div>
+{% endblock %}

@@ -25,7 +25,6 @@ class PanierRepository extends ServiceEntityRepository
             ->where('p.utilisateur = :val')
             ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
