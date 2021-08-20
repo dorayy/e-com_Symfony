@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Securizer;
+use DateTime;
 
 /**
  * @Route("/panier")
@@ -21,13 +23,22 @@ class PanierController extends AbstractController
     /**
      * @Route("/", name="panier_index", methods={"GET"})
      */
-    public function index(PanierRepository $panierRepository): Response
+    public function index(PanierRepository $panierRepository,Securizer $securizer): Response
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $user->getId();
 
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
+
         return $this->render('panier/index.html.twig', [
             'paniers' => $panierRepository->findPanierUser($user),
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
@@ -105,13 +116,13 @@ class PanierController extends AbstractController
     {
         // Récupération du user de session 
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        // Création d'un panier
-        $newPanier = new Panier();
-        $newPanier->setUtilisateur($user);
 
+        $userId = $this->get('security.token_storage')->getToken()->getUser();
+        $userId->getId();
+
+        // Vérification si panier deja existant
+        $panierUser = $panierRepository->findPanierUser($user);
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($newPanier);
-        $entityManager->flush();
 
         // Récupération params
         $qte = $request->query->get('qte');
@@ -122,14 +133,70 @@ class PanierController extends AbstractController
 
         // Création du contenu Panier
         $newContenu = new ContenuPanier();
-        $newContenu->setQuantite($qte);
-        $newContenu->setPanier($newPanier);
-        $newContenu->setProduit($produit);
 
-        $entityManager->persist($newContenu);
-        $entityManager->flush();
+        if(empty($panierUser)){ 
+            // Création du panier
+            $panier = new Panier();
+            $panier->setUtilisateur($user);
+
+            $entityManager->persist($panier);
+            $entityManager->flush();
+
+            $newContenu->setPanier($panier);
+            $newContenu->setQuantite($qte);
+            $newContenu->setProduit($produit);
+    
+            $entityManager->persist($newContenu);
+            $entityManager->flush();
+
+        }else{
+            $panier = $panierRepository->findOneBy(array('utilisateur' => $userId),array('id'=>'DESC'),1,0);
+      
+            $newContenu->setPanier($panier);
+            $newContenu->setQuantite($qte);
+            $newContenu->setProduit($produit);
+    
+            $entityManager->persist($newContenu);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }
+
+     /**
+     * @Route("/achat/{id}", name="panier_achat", methods={"GET","POST"})
+     */
+    public function achat(PanierRepository $panierRepository ,Request $request): Response
+    {
+        // Récupération du user
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+
+        // Acces database
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // Recherche et maj concernant l'achat
+        $panier = $panierRepository->findOneBy(array('utilisateur' => $user),array('id'=>'DESC'),1,0);
+        $panier->setDateAchat(new \DateTime("now"));
+        $panier->setEtat(1);
+
+        // Envoie data vers la base
+        $entityManager->persist($panier);
+        $entityManager->flush();
+
+        // Création d'un new panier apres commande
+        if($panier->getEtat() == true){
+            $userT = $this->get('security.token_storage')->getToken()->getUser();
+
+            $panier = new Panier();
+            $panier->setUtilisateur($userT);
+            
+            $entityManager->persist($panier);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 
 }

@@ -79,7 +79,7 @@ class ContenuPanierController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="contenu_panier_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="contenu_panier_delete", methods={"POST"})
      */
     public function delete(Request $request, ContenuPanier $contenuPanier): Response
     {
@@ -89,7 +89,9 @@ class ContenuPanierController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('contenu_panier_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 
 }

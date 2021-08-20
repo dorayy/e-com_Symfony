@@ -99,4 +99,9 @@ class ContenuPanier
     {
         $this->dateAjout = new \DateTime("now");
     }
+
+    public function __toString()
+    {
+        return $this->id;
+    }
 }
