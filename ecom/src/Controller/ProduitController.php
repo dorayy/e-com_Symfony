@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Securizer;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
 * @Route("{_locale}")
@@ -42,7 +43,8 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produit/new", name="produit_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Securizer $securizer): Response
+
+    public function new(Request $request, Securizer $securizer, TranslatorInterface $t): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
@@ -60,6 +62,8 @@ class ProduitController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($produit);
             $entityManager->flush();
+
+            $this->addFlash('success', $t->trans('création effectué'));
 
             return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -116,7 +120,8 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produit/{id}/edit", name="produit_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Produit $produit, Securizer $securizer): Response
+    public function edit(Request $request, Produit $produit,Securizer $securizer, TranslatorInterface $t): Response
+
     {
         $isAdmin = 0;
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -133,6 +138,8 @@ class ProduitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', $t->trans('modification effectué'));
+            
             return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -144,15 +151,17 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/produit/{id}", name="produit_delete", methods={"POST"})
+     * @Route("/produit/{id}/delete", name="produit_delete", methods={"POST"})
      */
-    public function delete(Request $request, Produit $produit): Response
+    public function delete(Request $request, Produit $produit, TranslatorInterface $t): Response
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($produit);
             $entityManager->flush();
         }
+
+        $this->addFlash('warning', $t->trans('suppression effectué'));
 
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }

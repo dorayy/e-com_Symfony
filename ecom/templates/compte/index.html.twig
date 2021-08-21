@@ -4,10 +4,20 @@
 
 {% block body %}
 
-
+<h1> Bonjour {{nom}}</h1>
 <div>
+
     <h1>{{ 'Compte.Nom'|trans( {'%nom%': nom }) }}</h1>
      <p><a class="btn btn-outline-primary" href="{{ path('compte_edit') }}">{{ 'Compte.Profil'|trans }}</a></p>
      <p><a class="btn btn-outline-primary" href="{{ path('compte_commande') }}">{{ 'Compte.Commande'|trans }}</a></p>
+
+
+
+{% if isSuperAdmin == 1%}
+<div>
+     <p><a class="btn btn-outline-primary" href="{{ path('commande_panier') }}">Liste Panier non achetés</a></p>
+     <p><a class="btn btn-outline-primary" href="{{ path('compte_user') }}">Liste utilisateurs</a></p>
 </div>
+{% endif %}
+
 {% endblock %}

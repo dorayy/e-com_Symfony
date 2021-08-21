@@ -6,8 +6,10 @@
     <h1>{{ 'Produit.Nom.Index'|trans }}</h1><br>
 
     <h5> {{ 'Login.Bienvenue'|trans( {'%nom%': user }) }} </h5><br>
-
+    
+    {% if isAdmin == 1 %}
     <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">{{ 'Produit.Nom.New'|trans }}</a>
+    {% endif %}
 
     <table class="table">
         <thead>
@@ -29,7 +31,7 @@
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.prix }}</td>
                 <td>{{ produit.stock }}</td>
-                <td>{{ produit.photo }}</td>
+                <td><img class="fit-picture" style="width: 50px" src="{{ produit.photo }}"></td>
                 {% if isAdmin == 1 %}
                 <td>
                     <a class="btn btn-outline-secondary btn-sm" href="{{ path('produit_edit', {'id': produit.id}) }}">{{ 'Global.Modifier'|trans }}</a>

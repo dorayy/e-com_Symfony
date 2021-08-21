@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Commande{% endblock %}
+
+{% block body %}
+    <h1>liste des utilisateurs</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email :</th>
+                <th>Roles : </th>
+                <th>Nom</th>
+                <th>Prénom</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in user %}
+            <tr>
+                    <td>{{ user.email }} </td>
+                    <td>{{ user.roles.0 }} </td>
+                    <td>{{ user.nom}}</td>
+                    <td>{{ user.prenom}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('compte_accueil') }}"> Retour </a>
+
+{% endblock %}

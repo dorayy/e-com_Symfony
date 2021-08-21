@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Securizer;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("{_locale}/user")
@@ -57,7 +57,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user, Securizer $securizer): Response
+    public function edit(Request $request, User $user, TranslatorInterface $t, Securizer $securizer): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -72,6 +72,9 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+
+            $this->addFlash('success', $t->trans('modification effectué'));
 
             return $this->redirectToRoute('compte_accueil', [], Response::HTTP_SEE_OTHER);
         }

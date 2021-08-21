@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Securizer;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("{_locale}/contenu/panier")
@@ -119,13 +120,14 @@ class ContenuPanierController extends AbstractController
     /**
      * @Route("/delete/{id}", name="contenu_panier_delete", methods={"POST"})
      */
-    public function delete(Request $request, ContenuPanier $contenuPanier): Response
+    public function delete(Request $request, ContenuPanier $contenuPanier, TranslatorInterface $t): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contenuPanier->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($contenuPanier);
             $entityManager->flush();
         }
+        $this->addFlash('warning', $t->trans('suppression produit du panier effectué'));
 
         return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -156,6 +158,16 @@ class ContenuPanierController extends AbstractController
         return $this->render('commande/index.html.twig', [
             'user' =>  $user,
             'commande_detail' => $contenuPanierRepository->findCommandeDetailUser($user, $id),
+        ]);
+    }
+
+    /**
+     * @Route("/panier", name="commande_panier", methods={"GET"})
+     */
+    public function showPanierOfUsers(PanierRepository $panierRepository): Response
+    {      
+        return $this->render('compte/users.html.twig', [
+            'user_panier' => $panierRepository->findPanierNonAchete()
         ]);
     }
 
