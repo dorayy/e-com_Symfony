@@ -1,28 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit index{% endblock %}
+{% block title %}{{ 'Produit.Titre.Index'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Page d'Accueil</h1><br>
+    <h1>{{ 'Produit.Nom.Index'|trans }}</h1><br>
 
-    <h5> Bonjour utilisateur : {{user}} </h5><br>
-
-    <h3> Liste des produits </h3>
+    <h5> {{ 'Login.Bienvenue'|trans( {'%nom%': user }) }} </h5><br>
     
     {% if isAdmin == 1 %}
-        <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">Create new</a>
+    <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">{{ 'Produit.Nom.New'|trans }}</a>
     {% endif %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Photo</th>
+                <th>{{ 'Global.Nom'|trans }}</th>
+                <th>{{ 'Global.Description'|trans }}</th>
+                <th>{{ 'Global.Prix'|trans }}</th>
+                <th>{{ 'Global.Stock'|trans }}</th>
+                <th>{{ 'Global.Photo'|trans }}</th>
                 {% if isAdmin == 1 %}
-                <th>actions</th>
+                <th>{{ 'Global.Actions'|trans }}</th>
                 {% endif %}
             </tr>
         </thead>
@@ -36,21 +34,14 @@
                 <td><img class="fit-picture" style="width: 50px" src="{{ produit.photo }}"></td>
                 {% if isAdmin == 1 %}
                 <td>
-                    <a class="btn btn-outline-secondary btn-sm" href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ path('produit_edit', {'id': produit.id}) }}">{{ 'Global.Modifier'|trans }}</a>
                 </td>
                 {% endif %}
             </tr>
         {% else %}
-            {% if isAdmin == 1 %}
-                <tr>
-                    <td colspan="7">no records found</td>
-                </tr>
-                <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">Create new</a>
-            {% else %}
-                <tr>
-                    <td colspan="7">no records found</td>
-                </tr>
-            {% endif %}
+            <tr>
+                <td colspan="7">{{ 'Produit.Aucun'|trans }}</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>

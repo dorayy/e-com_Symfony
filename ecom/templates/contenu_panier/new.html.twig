@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New ContenuPanier{% endblock %}
+{% block title %}{{ 'ContenuPanier.Titre.New'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Create new ContenuPanier</h1>
+    <h1>{{ 'ContenuPanier.Nom.New'|trans }}</h1>
 
-    {{ include('contenu_panier/_form.html.twig') }}
+    {% if isAdmin == 1 %}
+        {{ include('contenu_panier/_form.html.twig') }}
+        <a  class="btn btn-primary" href="{{ path('contenu_panier_index') }}">{{ 'Global.Retour'|trans }}</a>
+    {% else %}
+        <p>{{ 'Global.Acces'|trans }}</p>
+    {% endif %}
 
-    <a href="{{ path('contenu_panier_index') }}">back to list</a>
 {% endblock %}

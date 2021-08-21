@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{{ 'User.Titre.Edit'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <h1>{{ 'User.Nom.Edit'|trans }}</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a class="btn btn-outline-secondary" href="{{ path('compte_accueil') }}">back</a>
-
+    {% if isAdmin == 1 %}
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+        <a class="btn btn-primary" href="{{ path('compte_accueil', {'id': user.id}) }}">{{ 'Global.Retour'|trans }}</a>
+    {% else %}
+        <p>{{ 'Global.Acces'|trans }}</p>
+    {% endif %}
+    
 {% endblock %}

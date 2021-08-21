@@ -12,7 +12,7 @@ use App\Service\Securizer;
 use App\Repository\UserRepository;
 
 /**
- * @Route("/compte")
+ * @Route("{_locale}/compte")
  */
 class CompteController extends AbstractController
 {

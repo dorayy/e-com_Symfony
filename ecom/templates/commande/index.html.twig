@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail Commande{% endblock %}
+{% block title %}{{ 'Commande.Titre'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Détail Commande</h1>
+    <h1>{{ 'Commande.Nom'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-                <th>Montant</th>
-                <th>Date Achat</th>
+                <th>{{ 'Global.Nom'|trans }}</th>
+                <th>{{ 'Global.Quantite'|trans }}</th>
+                <th>{{ 'Global.Prix'|trans }}</th>
+                <th>{{ 'Global.Montant'|trans }}</th>
+                <th>{{ 'Global.DateAchat'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +30,6 @@
         </tbody>
     </table>
 
-    <a class="btn btn-outline-secondary" href="{{ path('compte_commande') }}"> Retour </a>
+    <a class="btn btn-primary" href="{{ path('compte_commande') }}">{{ 'Global.Retour'|trans }}</a>
 
 {% endblock %}

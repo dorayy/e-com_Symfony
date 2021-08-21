@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ 'Base.Titre'|trans }}{% endblock %}</title>
 
         <!-- Import Bootstrape -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -21,26 +21,25 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                    
-                    {% if app.user is not null %}
+                        {% if app.user is not null %}
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ path('produit_index') }}">Home</span></a>
+                                <a class="nav-link" href="{{ path('produit_index') }}">{{ 'Base.Accueil'|trans }}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('panier_index') }}">Panier</a>
+                                <a class="nav-link" href="{{ path('panier_index') }}">{{ 'Base.Panier'|trans }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('compte_accueil') }}">Compte</a>
+                                <a class="nav-link" href="{{ path('compte_accueil') }}">{{ 'Base.Compte'|trans }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                                <a class="nav-link" href="{{ path('app_logout') }}">{{ 'Base.Deconnexion'|trans }}</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                                <a class="nav-link" href="{{ path('app_register') }}">{{ 'Base.Inscription'|trans }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                                <a class="nav-link" href="{{ path('app_login') }}">{{ 'Base.Connexion'|trans }}</a>
                             </li>
                         {% endif %}
                     </ul>

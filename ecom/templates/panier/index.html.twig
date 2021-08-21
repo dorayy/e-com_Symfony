@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier index{% endblock %}
+{% block title %}{{ 'Panier.Titre.Index'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Panier index</h1>
+    <h1>{{ 'Panier.Nom.Index'|trans }}</h1>
 
     {% set montantTotal = 0 %}
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-                <th>Montant</th>
-                <th>actions</th>
+                <th>{{ 'Global.Nom'|trans }}</th>
+                <th>{{ 'Global.Quantite'|trans }}</th>
+                <th>{{ 'Global.Prix'|trans }}</th>
+                <th>{{ 'Global.Montant'|trans }}</th>
+                {% if isAdmin == 1 %}
+                <th>{{ 'Global.Actions'|trans }}</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -29,38 +31,38 @@
                         <td>{{ montant }}</td>
                         <td>
                             {% if isAdmin == 1 %}
-                                <p><a class="btn btn-outline-secondary btn-sm" href="{{ path('panier_edit', {'id': panier.id}) }}">edit</a></p>                          
+                                <a class="btn btn-primary" href="{{ path('panier_edit', {'id': panier.id}) }}">{{ 'Global.Modifier'|trans }}</a>                         
                             {% endif %}
-                            <form method="post" action="{{ path('contenu_panier_delete', {'id': contenu.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <form method="post" action="{{ path('contenu_panier_delete', {'id': contenu.id}) }}" onsubmit="return confirm('{{ 'Panier.Supprimer'|trans }}');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contenu.id) }}">
-                                <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                <button class="btn btn-danger">{{ 'Global.Supprimer'|trans }}</button>
                             </form>
                         </td>
                         {% set montantTotal = montantTotal + montant %}
                     </tr>
                 {% else %}
-                        <td colspan="4">no records found</td>
-                        <td>
-                            {% if isAdmin == 1 %}
-                                <p><a class="btn btn-outline-secondary btn-sm" href="{{ path('panier_edit', {'id': panier.id}) }}">edit</a></p>                          
-                            {% endif %}
-                        </td>
+                        <td colspan="5">{{ 'Produit.Aucun'|trans }}</td>
                     </tr>
                 {% endfor %}
             {% endif %}
         {% else %}
             <tr>
-                <td colspan="5">Votre pannier est vide</td>
+                <td colspan="5">{{ 'Panier.Aucun'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <h5> Montant à payer : {{ montantTotal }} </h5>
+    <h5> {{ 'Panier.MontantTotal'|trans }} : {{ montantTotal }} </h5>
 
     {% for panier in paniers %}
         {% if panier.etat == false %}
-            <a class="btn btn-outline-secondary btn-sm" href="{{ path('panier_achat', {'id': panier.id}) }}">Acheter vos produits</a>
+            <a class="btn btn-primary" href="{{ path('panier_achat', {'id': panier.id}) }}">{{ 'Panier.Acheter'|trans }}</a>
         {% endif %}
     {% endfor %}
+
+    {% if isAdmin == 1 %}
+        <a class="btn btn-primary" href="{{ path('panier_new') }}">{{ 'Panier.Nom.New'|trans }}</a>
+     {% endif %}
+
 {% endblock %}

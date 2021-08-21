@@ -1,0 +1,116 @@
+Commande :
+  Titre : E-commerce | Order Detail
+  Nom : Order Detail
+
+Compte :
+  Titre : My Account
+  Nom : Account of user %nom%
+  Profil : Edit your profile
+  Commande : Display Order history
+
+ContenuPanier :
+  Titre : 
+    Show : E-commerce | Cart Content
+    New : E-commerce | New Cart Content
+    Index : E-commerce | Carts Content
+    Edit : E-commerce | Edit Cart Content
+    Commande :  E-commerce | Order history
+  Nom : 
+    Show : Cart Content
+    New : New Cart Content
+    Index : Carts Content
+    Edit : Edit Cart Content
+    Commande : Order History
+  Aucun : No Cart Content
+  Supprimer : Are you sure you want to delete this cart content ?
+
+Panier :
+  Titre : 
+    Show : E-commerce | Cart
+    New : E-commerce | New Cart
+    Index : E-commerce | Cart
+    Edit : E-commerce | Edit Cart
+  Nom : 
+    Show : Cart
+    New : New Cart
+    Index : Cart
+    Edit : Edit Cart
+  Aucun : No Cart
+  Supprimer : Are you sure you want to delete this cart ?
+  MontantTotal :  Amount to be paid
+  Acheter : Buy your products
+
+Produit :
+  Titre : 
+    Show : E-commerce | User
+    New : E-commerce | New Product
+    Index : E-commerce | Home
+    Edit : E-commerce | Update Product
+  Nom : 
+    Show : Product
+    New : New Product
+    Index : Products
+    Edit : Update product
+  Aucun : No product
+  Supprimer : Are you sure you want to delete this product ?
+
+Registration :
+  Titre : E-commerce | Registration
+  Nom : Register
+
+Login :
+  Titre : E-commerce | Log In
+  Nom : Log In
+  Bienvenue : Welcome %nom%
+
+User : 
+  Titre : 
+    Show : E-commerce | User
+    New : E-commerce | New User
+    Index : E-commerce | Users
+    Edit : E-commerce | Update Profil
+  Nom : 
+    Show : User
+    New : New User
+    Index : Users
+    Edit : Update profil
+  Aucun : No User
+  Supprimer : Are you sure you want to delete this user ?
+
+Base :
+  Titre : E-commerce
+  Accueil : Home
+  Panier : Cart
+  Compte : My Account
+  Deconnexion : Log Out
+  Inscription : Registration
+  Connexion : Log In
+
+Global :
+  Id : Id
+  Utilisateur : User
+  Nom : Name
+  Quantite : Quantity
+  Prix : Price
+  Description : Description
+  Stock : Stock
+  Photo : Photo
+  Montant : Amount
+  Produit : Product
+  Panier : Cart
+  DateAchat : Date of purchase
+  DateAjout : Date added
+  Etat : State
+  Retour : Back
+  Modifier : Update
+  Supprimer : Delete
+  Valider : Confirm
+  Voir : Show
+  Email : Email
+  NomDeFamille : Last Name
+  Prenom : First Name
+  Password : Password
+  Roles : Rules
+  Actions : Actions
+  Terms : Agree Terms
+  Acces : Admin Access required

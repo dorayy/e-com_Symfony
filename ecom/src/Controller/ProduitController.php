@@ -15,12 +15,15 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+* @Route("{_locale}")
+*/
 class ProduitController extends AbstractController
 {
     /**
      * @Route("/home", name="produit_index", methods={"GET"})
      */
-    public function index(ProduitRepository $produitRepository,Securizer $securizer): Response
+    public function index(ProduitRepository $produitRepository, Securizer $securizer): Response
     {
         $isAdmin = 0;
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -40,11 +43,20 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produit/new", name="produit_new", methods={"GET","POST"})
      */
-    public function new(Request $request, TranslatorInterface $t): Response
+
+    public function new(Request $request, Securizer $securizer, TranslatorInterface $t): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
+
+        $isAdmin = 0;
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getNom();
+
+        if($securizer->isGranted($user, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -59,13 +71,14 @@ class ProduitController extends AbstractController
         return $this->renderForm('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
     /**
      * @Route("/produit/{id}", name="produit_show", methods={"GET","POST"})
      */
-    public function show(Produit $produit,Securizer $securizer, Request $request): Response
+    public function show(Produit $produit, Securizer $securizer, Request $request): Response
     {
         $isAdmin = 0;
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -78,8 +91,12 @@ class ProduitController extends AbstractController
         }
 
         $form = $this->createFormBuilder()
-            ->add('quantite', NumberType::class)
-            ->add('ajouterPanier', SubmitType::class)
+            ->add('quantite', NumberType::class, [
+                'label' => 'Global.Quantite',
+            ])
+            ->add('Entrer', SubmitType::class, [
+                'label' => 'Global.Valider',
+            ])
             ->getForm();
 
         $form->handleRequest($request);
@@ -104,6 +121,7 @@ class ProduitController extends AbstractController
      * @Route("/produit/{id}/edit", name="produit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Produit $produit,Securizer $securizer, TranslatorInterface $t): Response
+
     {
         $isAdmin = 0;
         $user = $this->get('security.token_storage')->getToken()->getUser();

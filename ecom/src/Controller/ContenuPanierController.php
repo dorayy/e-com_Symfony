@@ -10,31 +10,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Securizer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Route("/contenu/panier")
+ * @Route("{_locale}/contenu/panier")
  */
 class ContenuPanierController extends AbstractController
 {
     /**
      * @Route("/", name="contenu_panier_index", methods={"GET"})
      */
-    public function index(ContenuPanierRepository $contenuPanierRepository): Response
+    public function index(ContenuPanierRepository $contenuPanierRepository, Securizer $securizer): Response
     {
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
+
         return $this->render('contenu_panier/index.html.twig', [
             'contenu_paniers' => $contenuPanierRepository->findAll(),
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
     /**
      * @Route("/new", name="contenu_panier_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Securizer $securizer): Response
     {
         $contenuPanier = new ContenuPanier();
         $form = $this->createForm(ContenuPanierType::class, $contenuPanier);
         $form->handleRequest($request);
+
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -47,26 +65,44 @@ class ContenuPanierController extends AbstractController
         return $this->renderForm('contenu_panier/new.html.twig', [
             'contenu_panier' => $contenuPanier,
             'form' => $form,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
     /**
      * @Route("/show/{id}", name="contenu_panier_show", methods={"GET"})
      */
-    public function show(ContenuPanier $contenuPanier): Response
+    public function show(ContenuPanier $contenuPanier, Securizer $securizer): Response
     {
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
+
         return $this->render('contenu_panier/show.html.twig', [
             'contenu_panier' => $contenuPanier,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="contenu_panier_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, ContenuPanier $contenuPanier): Response
+    public function edit(Request $request, ContenuPanier $contenuPanier, Securizer $securizer): Response
     {
         $form = $this->createForm(ContenuPanierType::class, $contenuPanier);
         $form->handleRequest($request);
+
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -77,6 +113,7 @@ class ContenuPanierController extends AbstractController
         return $this->renderForm('contenu_panier/edit.html.twig', [
             'contenu_panier' => $contenuPanier,
             'form' => $form,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 

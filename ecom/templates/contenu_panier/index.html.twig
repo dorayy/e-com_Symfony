@@ -1,17 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ContenuPanier index{% endblock %}
+{% block title %}{{ 'ContenuPanier.Titre.Index'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>ContenuPanier index</h1>
+    <h1>{{ 'ContenuPanier.Nom.Index'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Quantite</th>
-                <th>DateAjout</th>
-                <th>actions</th>
+                <th>{{ 'Global.Id'|trans }}</th>
+                <th>{{ 'Global.Quantite'|trans }}</th>
+                <th>{{ 'Global.DateAjout'|trans }}</th>
+                {% if isAdmin == 1 %}
+                <th>{{ 'Global.Actions'|trans }}</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -20,18 +22,23 @@
                 <td>{{ contenu_panier.id }}</td>
                 <td>{{ contenu_panier.quantite }}</td>
                 <td>{{ contenu_panier.dateAjout ? contenu_panier.dateAjout|date('Y-m-d H:i:s') : '' }}</td>
+                {% if isAdmin == 1 %}
                 <td>
-                    <a href="{{ path('contenu_panier_show', {'id': contenu_panier.id}) }}">show</a>
-                    <a href="{{ path('contenu_panier_edit', {'id': contenu_panier.id}) }}">edit</a>
+                    <a class="btn btn-primary" href="{{ path('contenu_panier_show', {'id': contenu_panier.id}) }}">{{ 'Global.Voir'|trans }}</a>
+                    <a class="btn btn-primary" href="{{ path('contenu_panier_edit', {'id': contenu_panier.id}) }}">{{ 'Global.Modifier'|trans }}</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">{{ 'ContenuPanier.Aucun'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('contenu_panier_new') }}">Create new</a>
+    {% if isAdmin == 1 %}
+        <a class="btn btn-primary" href="{{ path('contenu_panier_new') }}">{{ 'ContenuPanier.Nom.New'|trans }}</a>
+     {% endif %}
+
 {% endblock %}

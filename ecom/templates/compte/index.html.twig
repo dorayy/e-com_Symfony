@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CompteController!{% endblock %}
+{% block title %}{{ 'Compte.Titre'|trans }}{% endblock %}
 
 {% block body %}
 
 <h1> Bonjour {{nom}}</h1>
 <div>
-     <p><a class="btn btn-outline-primary" href="{{ path('compte_edit') }}">Edition espace profil</a></p>
-     <p><a class="btn btn-outline-primary" href="{{ path('compte_commande') }}"> Visualiser mes commandes</a></p>
-</div>
+
+    <h1>{{ 'Compte.Nom'|trans( {'%nom%': nom }) }}</h1>
+     <p><a class="btn btn-outline-primary" href="{{ path('compte_edit') }}">{{ 'Compte.Profil'|trans }}</a></p>
+     <p><a class="btn btn-outline-primary" href="{{ path('compte_commande') }}">{{ 'Compte.Commande'|trans }}</a></p>
+
 
 
 {% if isSuperAdmin == 1%}
@@ -17,4 +19,5 @@
      <p><a class="btn btn-outline-primary" href="{{ path('compte_user') }}">Liste utilisateurs</a></p>
 </div>
 {% endif %}
+
 {% endblock %}
