@@ -9,9 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
- * @Route("/compte")
+ * @Route("{_locale}/compte")
  */
 class CompteController extends AbstractController
 {

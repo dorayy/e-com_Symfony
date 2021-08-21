@@ -1,4 +1,11 @@
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.etat, {
+        label: 'Global.Etat'
+    }) }}
+    {{ form_row(form.utilisateur, {
+        label: 'Global.Utilisateur'
+    }) }}
+
+    <button type="submit" class="btn btn-success">{{ 'Global.Valider'|trans }}</button>
 {{ form_end(form) }}

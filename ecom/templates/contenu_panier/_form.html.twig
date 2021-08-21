@@ -1,4 +1,13 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.quantite, {
+        label: 'Global.Quantite'
+    }) }}
+    {{ form_row(form.produit, {
+        label: 'Global.Produit'
+    }) }}
+    {{ form_row(form.panier, {
+        label: 'Global.Panier'
+    }) }}
+
+    <button type="submit" class="btn btn-success">{{ 'Global.Valider'|trans }}</button>
 {{ form_end(form) }}

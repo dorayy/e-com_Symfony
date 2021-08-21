@@ -1,0 +1,116 @@
+Commande :
+  Titre : E-commerce | Détail de la commande
+  Nom : Détail de la commande
+
+Compte :
+  Titre : E-commerce | Mon Compte
+  Nom : Compte de l'utilisateur - %nom%
+  Profil : Modifier votre profil
+  Commande : Afficher l'historique des commandes
+
+ContenuPanier :
+  Titre : 
+    Show : E-commerce | Contenu du Panier
+    New : E-commerce | Nouveau Contenu de Panier
+    Index : E-commerce | Contenu de Paniers
+    Edit : E-commerce | Modifier Contenu du Panier
+    Commande :  E-commerce | Historique des commandes
+  Nom : 
+    Show : Contenu du Panier
+    New : Nouveau Contenu du Panier
+    Index : Contenu de Paniers
+    Edit : Modifier Contenu du Panier
+    Commande : Historique des commandes
+  Aucun : Aucun Contenu de Panier
+  Supprimer : Voulez-vous vraiment supprimer ce contenu de panier ?
+
+Panier : 
+  Titre : 
+    Show : E-commerce | Panier
+    New : E-commerce | Nouveau Panier
+    Index : E-commerce | Panier
+    Edit : E-commerce | Modifier Panier
+  Nom : 
+    Show : Panier
+    New : Nouveau Panier
+    Index : Panier
+    Edit : Modifier profil
+  Aucun : Aucun Panier
+  Supprimer : Voulez-vous vraiment supprimer ce panier ?
+  MontantTotal :  Montant à payer
+  Acheter : Acheter vos produits
+
+Produit :
+  Titre : 
+    Show : E-commerce | Produit
+    New : E-commerce | Nouveau Produit
+    Index : E-commerce | Accueil
+    Edit : E-commerce | Modifier Produit
+  Nom : 
+    Show : Produit
+    New : Nouveau produit
+    Index : Produits
+    Edit : Modifier produit
+  Aucun : Aucun produit
+  Supprimer : Voulez-vous vraiment supprimer ce produit ?
+
+Registration :
+  Titre : E-commerce | Inscription
+  Nom : S'inscrire
+
+Login :
+  Titre : E-commerce | Connexion
+  Nom : Se connecter
+  Bienvenue : Bienvenue %nom%
+
+User : 
+  Titre : 
+    Show : E-commerce | Utilisateur
+    New : E-commerce | Nouvel utilisateur
+    Index : E-commerce | Utilisateurs
+    Edit : E-commerce | Modifier Profil
+  Nom : 
+    Show : Utilisateur
+    New : Nouvel Utilisateur
+    Index : Utilisateurs
+    Edit : Modifier profil
+  Aucun : Aucun Utilisateur
+  Supprimer : Voulez-vous vraiment supprimer cet utilisateur ?
+
+Base :
+  Titre : E-commerce
+  Accueil : Accueil
+  Panier : Panier
+  Compte : Mon Compte
+  Deconnexion : Déconnexion
+  Inscription : Inscription
+  Connexion : Connexion
+
+Global :
+  Id : Id
+  Utilisateur : Utilisateur
+  Nom : Nom
+  Quantite : Quantité
+  Prix : Prix
+  Description : Description
+  Stock : Stock
+  Photo : Image
+  Montant : Montant
+  Produit : Produit
+  Panier : Panier
+  DateAchat : Date d'achat
+  DateAjout : Date d'ajout
+  Etat : Etat
+  Retour : Retour
+  Modifier : Modifier
+  Supprimer : Supprimer
+  Valider : Valider
+  Voir : Afficher
+  Email : E-mail
+  NomDeFamille : Nom
+  Prenom : Prénom
+  Password : Mot de passe
+  Roles : Rôles
+  Actions : Actions
+  Terms : Accepter les conditions
+  Acces : Accès Admin Requis

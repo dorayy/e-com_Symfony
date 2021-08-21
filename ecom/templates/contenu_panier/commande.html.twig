@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ContenuPanier{% endblock %}
+{% block title %}{{ 'ContenuPanier.Titre.Commande'|trans }}{% endblock %}
 
 {% block body %}
 
-    <h1>ContenuPanier</h1>
+    <h1>{{ 'ContenuPanier.Nom.Commande'|trans }}</h1>
  
     <table class="table">
         <thead>
             <tr>
-                <th>Identifiant</th>
-                <th>Montant</th>
-                <th>Date Achat</th>
+                <th>{{ 'Global.Id'|trans }}</th>
+                <th>{{ 'Global.Montant'|trans }}</th>
+                <th>{{ 'Global.DateAchat'|trans }}</th>
             </tr>
         </thead>
         <tbody>
         {% for p in panier %}
             {% set sum = 0 %}
             <tr>
-                <td><a href="{{ path('commande_detail', {"id": p.id })}}">{{ p.id }} </a> </td>
+                <td><a class="text-decoration-none badge bg-primary rounded-pill" href="{{ path('commande_detail', {"id": p.id })}}">{{ p.id }} </a> </td>
                 {% for contenu in contenu_panier %}
                     {% if p.id == contenu.id %}
                         {% set sum = sum + (contenu.prix * contenu.quantite) %}
@@ -33,5 +33,5 @@
 
 
 
-    <a href="{{ path('contenu_panier_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('contenu_panier_index') }}">{{ 'Global.Retour'|trans }}</a>
 {% endblock %}

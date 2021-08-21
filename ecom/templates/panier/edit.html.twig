@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Panier{% endblock %}
+{% block title %}{{ 'Panier.Titre.Edit'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Panier</h1>
+    <h1>{{ 'Panier.Nom.Edit'|trans }}</h1>
 
-    {{ include('panier/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if isAdmin == 1 %}
+        {{ include('panier/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('panier/_delete_form.html.twig') }}
+        <a  class="btn btn-primary" href="{{ path('panier_index') }}">{{ 'Global.Retour'|trans }}</a>
+    {% else %}
+        <p>{{ 'Global.Acces'|trans }}</p>
+    {% endif %}
 
-    <a href="{{ path('panier_index') }}">back to list</a>
-
-    {{ include('panier/_delete_form.html.twig') }}
 {% endblock %}

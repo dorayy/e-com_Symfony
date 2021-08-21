@@ -16,7 +16,7 @@ use App\Service\Securizer;
 use DateTime;
 
 /**
- * @Route("/panier")
+ * @Route("{_locale}/panier")
  */
 class PanierController extends AbstractController
 {
@@ -45,11 +45,19 @@ class PanierController extends AbstractController
     /**
      * @Route("/new", name="panier_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Securizer $securizer): Response
     {
         $panier = new Panier();
         $form = $this->createForm(PanierType::class, $panier);
         $form->handleRequest($request);
+
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -62,26 +70,44 @@ class PanierController extends AbstractController
         return $this->renderForm('panier/new.html.twig', [
             'panier' => $panier,
             'form' => $form,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
     /**
      * @Route("/show/{id}", name="panier_show", methods={"GET"})
      */
-    public function show(Panier $panier): Response
+    public function show(Panier $panier, Securizer $securizer): Response
     {
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
+
         return $this->render('panier/show.html.twig', [
             'panier' => $panier,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="panier_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Panier $panier): Response
+    public function edit(Request $request, Panier $panier, Securizer $securizer): Response
     {
         $form = $this->createForm(PanierType::class, $panier);
         $form->handleRequest($request);
+
+        $isAdmin = 0;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        $username->getNom();
+
+        if($securizer->isGranted($username, 'ROLE_ADMIN')){
+            $isAdmin = 1;
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -92,6 +118,7 @@ class PanierController extends AbstractController
         return $this->renderForm('panier/edit.html.twig', [
             'panier' => $panier,
             'form' => $form,
+            'isAdmin' =>  $isAdmin,
         ]);
     }
 

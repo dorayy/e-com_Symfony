@@ -1,4 +1,19 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.nom, {
+        label: 'Global.Nom'
+    }) }}
+    {{ form_row(form.description, {
+        label: 'Global.Description'
+    }) }}
+    {{ form_row(form.prix, {
+        label: 'Global.Prix'
+    }) }}
+    {{ form_row(form.stock, {
+        label: 'Global.Stock'
+    }) }}
+    {{ form_row(form.photo, {
+        label: 'Global.Photo'
+    }) }}
+
+    <button type="submit" class="btn btn-success">{{ 'Global.Valider'|trans }}</button>
 {{ form_end(form) }}

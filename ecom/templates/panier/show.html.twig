@@ -1,30 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier{% endblock %}
+{% block title %}{{ 'Panier.Titre.Show'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Panier</h1>
+    <h1>{{ 'Panier.Nom.Show'|trans }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Global.Id'|trans }}</th>
                 <td>{{ panier.id }}</td>
             </tr>
             <tr>
-                <th>DateAchat</th>
+                <th>{{ 'Global.DateAchat'|trans }}</th>
                 <td>{{ panier.dateAchat ? panier.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Etat</th>
+                <th>{{ 'Global.Etat'|trans }}</th>
                 <td>{{ panier.etat ? 'Yes' : 'No' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('panier_index') }}">back to list</a>
+    <a class="btn btn-primary" href="{{ path('panier_index') }}">{{ 'Global.Retour'|trans }}</a>
 
-    <a href="{{ path('panier_edit', {'id': panier.id}) }}">edit</a>
-
+    {% if isAdmin == 1 %}
+    <a class="btn btn-primary" href="{{ path('panier_edit', {'id': panier.id}) }}">{{ 'Global.Modifier'|trans }}</a>
     {{ include('panier/_delete_form.html.twig') }}
+    {% endif %}
+    
 {% endblock %}

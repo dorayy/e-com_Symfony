@@ -1,4 +1,13 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+        {{ form_row(form.email, {
+            label: 'Global.Email'
+        }) }}
+        {{ form_row(form.prenom, {
+            label: 'Global.Prenom'
+        }) }}
+        {{ form_row(form.nom, {
+            label: 'Global.NomDeFamille'
+        }) }}
+
+        <button type="submit" class="btn btn-success">{{ 'Global.Valider'|trans }}</button>
+    {{ form_end(form) }}
