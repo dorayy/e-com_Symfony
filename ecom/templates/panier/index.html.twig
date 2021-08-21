@@ -63,8 +63,4 @@
             <a class="btn btn-outline-secondary btn-sm" href="{{ path('panier_achat', {'id': panier.id}) }}">Acheter vos produits</a>
         {% endif %}
     {% endfor %}
-
-    {% if isAdmin == 1 %}
-        <a href="{{ path('panier_new' ) }}">Create new</a>
-     {% endif %}
 {% endblock %}

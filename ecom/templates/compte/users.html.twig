@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>liste les paniers non achetés</h1>
+    {# {{dump(user_panier)}} #}
     <table class="table">
         <thead>
             <tr>
@@ -17,7 +18,7 @@
             <tr>
                     <td>{{ user.email }} </td>
                     <td>{{ user.id }} </td>
-                    <td>🧺 Nom : {{ user.0.produit.nom }} | Prix :{{ user.0.produit.prix }} $ | Quantite : {{ user.0.quantite }}</td>
+                    <td>🧺 Nom : {{ user.nom }} | Prix :{{ user.prix }} $ | Quantite : {{ user.quantite }}</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -47,7 +47,7 @@ class PanierRepository extends ServiceEntityRepository
     public function findPanierNonAchete()
     {
         return $this->createQueryBuilder('p')
-            ->select('u.email','p.id' , 'c')
+            ->select('u.email','p.id' , 'pr.nom' , 'pr.prix', 'c.quantite')
             ->leftJoin('App\Entity\ContenuPanier',
                         'c',
                         \Doctrine\ORM\Query\Expr\Join::WITH,

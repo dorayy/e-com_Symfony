@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Securizer;
 use DateTime;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 /**
  * @Route("/panier")
@@ -112,7 +114,7 @@ class PanierController extends AbstractController
     /**
      * @Route("/panier_article", name="panier_article", methods={"GET"})
      */
-    public function addArticleToPanier(PanierRepository $panierRepository,Request $request,ProduitRepository $produitRepository): Response
+    public function addArticleToPanier(PanierRepository $panierRepository, TranslatorInterface $t ,Request $request,ProduitRepository $produitRepository): Response
     {
         // Récupération du user de session 
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -159,6 +161,7 @@ class PanierController extends AbstractController
             $entityManager->persist($newContenu);
             $entityManager->flush();
         }
+        $this->addFlash('success', $t->trans('ajout effectué'));
 
         return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -166,7 +169,7 @@ class PanierController extends AbstractController
      /**
      * @Route("/achat/{id}", name="panier_achat", methods={"GET","POST"})
      */
-    public function achat(PanierRepository $panierRepository ,Request $request): Response
+    public function achat(PanierRepository $panierRepository ,Request $request, TranslatorInterface $t): Response
     {
         // Récupération du user
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -194,6 +197,8 @@ class PanierController extends AbstractController
             $entityManager->persist($panier);
             $entityManager->flush();
         }
+
+        $this->addFlash('success', $t->trans('Achat effectué , rendez-vous dans votre espace compte pour consulter vos commandes'));
 
         return $this->redirectToRoute('panier_index', [], Response::HTTP_SEE_OTHER);
     }

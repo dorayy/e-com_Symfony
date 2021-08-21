@@ -8,6 +8,10 @@
     <h5> Bonjour utilisateur : {{user}} </h5><br>
 
     <h3> Liste des produits </h3>
+    
+    {% if isAdmin == 1 %}
+        <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">Create new</a>
+    {% endif %}
 
     <table class="table">
         <thead>
@@ -29,11 +33,10 @@
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.prix }}</td>
                 <td>{{ produit.stock }}</td>
-                <td>{{ produit.photo }}</td>
+                <td><img class="fit-picture" style="width: 50px" src="{{ produit.photo }}"></td>
                 {% if isAdmin == 1 %}
                 <td>
                     <a class="btn btn-outline-secondary btn-sm" href="{{ path('produit_edit', {'id': produit.id}) }}">edit</a>
-                    <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">Create new</a>
                 </td>
                 {% endif %}
             </tr>
