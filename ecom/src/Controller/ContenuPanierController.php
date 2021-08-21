@@ -122,4 +122,14 @@ class ContenuPanierController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/panier", name="commande_panier", methods={"GET"})
+     */
+    public function showPanierOfUsers(PanierRepository $panierRepository): Response
+    {      
+        return $this->render('compte/users.html.twig', [
+            'user_panier' => $panierRepository->findPanierNonAchete()
+        ]);
+    }
+
 }

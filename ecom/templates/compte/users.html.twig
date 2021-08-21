@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Commande{% endblock %}
+
+{% block body %}
+    <h1>liste les paniers non achetés</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User :</th>
+                <th>Num Panier : </th>
+                <th>Contenu Panier</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in user_panier %}
+            <tr>
+                    <td>{{ user.email }} </td>
+                    <td>{{ user.id }} </td>
+                    <td>🧺 Nom : {{ user.0.produit.nom }} | Prix :{{ user.0.produit.prix }} $ | Quantite : {{ user.0.quantite }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('compte_accueil') }}"> Retour </a>
+
+{% endblock %}

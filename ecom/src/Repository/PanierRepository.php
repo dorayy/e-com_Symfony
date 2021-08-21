@@ -43,6 +43,30 @@ class PanierRepository extends ServiceEntityRepository
         ;
     }
 
+
+    public function findPanierNonAchete()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('u.email','p.id' , 'c')
+            ->leftJoin('App\Entity\ContenuPanier',
+                        'c',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                       'p.id = c.panier')
+            ->leftJoin('App\Entity\Produit',
+                        'pr',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                        'pr.id = c.produit')
+            ->leftJoin('App\Entity\User',
+                        'u',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                        'u.id = p.utilisateur')
+            ->where('p.etat = :etat')
+            ->setParameter('etat', 0)
+            ->getQuery()
+            ->getResult() 
+        ;
+    }
+
     // /**
     //  * @return Panier[] Returns an array of Panier objects
     //  */
