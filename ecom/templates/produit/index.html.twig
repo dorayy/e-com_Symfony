@@ -38,10 +38,16 @@
                 {% endif %}
             </tr>
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-            <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">Create new</a>
+            {% if isAdmin == 1 %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+                <a class="btn btn-outline-success btn-sm" href="{{ path('produit_new') }}">Create new</a>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
