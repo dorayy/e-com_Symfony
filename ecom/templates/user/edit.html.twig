@@ -4,12 +4,6 @@
 
 {% block body %}
     <h1>{{ 'User.Nom.Edit'|trans }}</h1>
-
-    {% if isAdmin == 1 %}
-        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-        <a class="btn btn-primary" href="{{ path('compte_accueil', {'id': user.id}) }}">{{ 'Global.Retour'|trans }}</a>
-    {% else %}
-        <p>{{ 'Global.Acces'|trans }}</p>
-    {% endif %}
-    
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    <a class="btn btn-primary" href="{{ path('compte_accueil', {'id': user.id}) }}">{{ 'Global.Retour'|trans }}</a>
 {% endblock %}
