@@ -26,6 +26,11 @@ class ProduitController extends AbstractController
     public function index(ProduitRepository $produitRepository, Securizer $securizer): Response
     {
         $isAdmin = 0;
+
+        if($this->get('security.token_storage')->getToken() == null){
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $user->getNom();
 

@@ -14,8 +14,8 @@
 
 {% if isSuperAdmin == 1%}
 <div>
-     <p><a class="btn btn-outline-primary" href="{{ path('commande_panier') }}">Liste Panier non achetés</a></p>
-     <p><a class="btn btn-outline-primary" href="{{ path('compte_user') }}">Liste utilisateurs</a></p>
+     <p><a class="btn btn-outline-primary" href="{{ path('commande_panier') }}">{{ 'Compte.Panier'|trans }}</a></p>
+     <p><a class="btn btn-outline-primary" href="{{ path('compte_user') }}">{{ 'Compte.User'|trans }}</a></p>
 </div>
 {% endif %}
 

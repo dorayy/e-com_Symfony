@@ -3,14 +3,14 @@
 {% block title %}Détail Commande{% endblock %}
 
 {% block body %}
-    <h1>liste les paniers non achetés</h1>
+    <h1>{{ 'Compte.Panier'|trans }}</h1>
     {# {{dump(user_panier)}} #}
     <table class="table">
         <thead>
             <tr>
-                <th>User :</th>
-                <th>Num Panier : </th>
-                <th>Contenu Panier</th>
+                <th>{{ 'Global.Utilisateur'|trans }}</th>
+                <th> N° {{ 'Global.Panier'|trans }}</th>
+                <th>{{ 'ContenuPanier.Nom.Show'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +24,6 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('compte_accueil') }}"> Retour </a>
+    <a class="btn btn-primary" href="{{ path('compte_accueil') }}"> {{ 'Global.Retour'|trans }} </a>
 
 {% endblock %}

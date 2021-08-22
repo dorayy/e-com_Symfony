@@ -7,6 +7,8 @@ Compte :
   Nom : Compte de l'utilisateur - %nom%
   Profil : Modifier votre profil
   Commande : Afficher l'historique des commandes
+  Panier : Liste Panier non achetés
+  User : Liste utilisateurs
 
 ContenuPanier :
   Titre : 

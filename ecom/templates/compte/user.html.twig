@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail Commande{% endblock %}
+{% block title %}{{ 'Commande.Nom'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>liste des utilisateurs</h1>
+    <h1>{{'Compte.User'|trans }}</h1>
     
     <table class="table">
         <thead>
             <tr>
-                <th>Email :</th>
-                <th>Roles : </th>
-                <th>Nom</th>
-                <th>Prénom</th>
+                <th>{{ 'Global.Email'|trans }}</th>
+                <th>{{ 'Global.Roles'|trans }}</th>
+                <th>{{ 'Global.Nom'|trans }}</th>
+                <th>{{ 'Global.Prenom'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +26,6 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('compte_accueil') }}"> Retour </a>
+    <a class="btn btn-primary" href="{{ path('compte_accueil') }}">{{ 'Global.Retour'|trans }}</a>
 
 {% endblock %}
